@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-export BASE_PATH="/tenet-converter/"
-
 set -e
 npm run build
 
