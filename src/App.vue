@@ -20,7 +20,21 @@
           </div>
         </div>
         <div class="column">
-          Second column
+          <div class="box">
+            <div class="field">
+              <label class="label">TENET</label>
+              <div class="control">
+                <input class="input" v-model="tenetInput" type="text" placeholder="0">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">aTENET</label>
+              <div class="control">
+                <input class="input" v-model="atenetInput" type="text" placeholder="0">
+              </div>
+            </div>
+          </div>
         </div>
         <div class="column">
           Third column
@@ -34,8 +48,28 @@
 import {bech32} from "bech32";
 import {ref, watch} from "vue";
 import * as eip55 from "eip55";
+import web3 from "web3";
 
-bech32.decode('tenet1px8tpk4f8t6zxyv8v80ghdle4ujc6jveetl9vd')
+let tenetInput = ref("");
+let atenetInput = ref("");
+
+watch(tenetInput, (val) => {
+  try {
+    atenetInput.value = web3.utils.toWei(val, "ether");
+  } catch(e) {
+    console.log(e);
+    atenetInput.value = "";
+  }
+})
+
+watch(atenetInput, (val) => {
+  try {
+    tenetInput.value = web3.utils.fromWei(val, "ether");
+  } catch(e) {
+    console.log(e);
+    tenetInput.value = "";
+  }
+})
 
 let addressInput = ref("");
 let address = ref(null);
@@ -79,9 +113,6 @@ function bytesToHex(bytes) {
   }
   return hex.join("");
 }
-
-// tenet1px8tpk4f8t6zxyv8v80ghdle4ujc6jveetl9vd
-
 </script>
 
 <style scoped>
