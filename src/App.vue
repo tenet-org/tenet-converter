@@ -1,7 +1,17 @@
 <template>
-  <section class="section">
+  <nav class="navbar is-black" role="navigation" aria-label="main navigation">
     <div class="container">
-      <h1 class="is-1 title">Tenet Converter</h1>
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img src="@/assets/logo.png">
+          Tenet Converter
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="mt-5">
+    <div class="container">
       <div class="columns">
         <div class="column">
           <div class="box">
@@ -12,9 +22,9 @@
               </div>
 
               <ul v-if="address" class="list">
-                <li><b>Address (EIP-55)</b> {{ address.eip55 }}</li>
-                <li><b>Bech32 Acc</b> {{ address.acc }}</li>
-                <li><b>Bech32 Val</b> {{ address.val }}</li>
+                <li><b>Address (EIP-55) <a target="_blank" :href="'https://tenetscan.io/address/' + address.eip55">scan</a></b> {{ address.eip55 }} </li>
+                <li><b>Bech32 Acc <a target="_blank" :href="'https://tenet.explorers.guru/account/' + address.acc">scan</a></b> {{ address.acc }} </li>
+                <li><b>Bech32 Val <a target="_blank" :href="'https://tenet.explorers.guru/validator/' + address.val">scan</a></b> {{ address.val }} </li>
               </ul>
             </div>
           </div>
@@ -37,7 +47,6 @@
           </div>
         </div>
         <div class="column">
-          Third column
         </div>
       </div>
     </div>
@@ -87,7 +96,7 @@ watch(addressInput, (val) => {
       address.value = {
         eip55: eip55.encode("0x" + bytesToHex(bech32.fromWords(words))),
         acc: bech32.encode('tenet', words),
-        val: bech32.encode('tenetval', words),
+        val: bech32.encode('tenetvaloper', words),
       }
     } catch(e) {
       console.log(e);
